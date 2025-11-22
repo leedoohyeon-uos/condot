@@ -1,0 +1,7 @@
+{
+  "name": "Copy of Copy of Copy of Copy of Copy of Copy of Copy of Copy of Condot Career Assistant_10",
+  "description": "A chat-based career archiving assistant that visualizes user achievements into experience cards using Gemini.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

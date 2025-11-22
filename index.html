@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Condot - Career Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                bg: '#F5F5F5',
+                sidebar: '#FFFFFF',
+                accent: '#FFD59E',
+                cardStart: '#FDFDC6',
+                cardEnd: '#D8E9D6',
+                text: '#333333',
+                orange: '#FF8A00'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+
+    <!-- 안전: client_id는 프론트에서만 필요하면 노출 가능 -->
+    <meta name="gcloud-client-id" content="525112638230-n7nmive1aq8unugknd89rgmav0sc60bo.apps.googleusercontent.com">
+
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+        "react/": "https://aistudiocdn.com/react@^19.2.0/",
+        "react": "https://aistudiocdn.com/react@^19.2.0",
+        "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+      }
+    }
+    </script>
+
+    <link rel="stylesheet" href="/index.css">
+  </head>
+
+  <body class="bg-brand-bg h-screen w-screen overflow-hidden text-brand-text">
+    <div class="p-6">
+      <h1 class="text-2xl font-semibold mb-4">Condot - Vision Upload</h1>
+      <input id="fileInput" type="file" accept="image/*" class="mb-3" />
+      <button id="uploadBtn" class="px-4 py-2 bg-brand-orange text-white rounded">업로드 및 분석</button>
+
+      <pre id="result" class="mt-4 bg-white p-4 rounded shadow max-w-2xl whitespace-pre-wrap"></pre>
+    </div>
+
+    <script>
+      // 프론트엔드: 파일을 서버에 전송 (/api/vision). 서버가 Vision API를 호출해서 결과를 리턴.
+      const uploadBtn = document.getElementById('uploadBtn');
+      const fileInput = document.getElementById('fileInput');
+      const resultEl = document.getElementById('result');
+
+      uploadBtn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) {
+          alert('이미지 파일을 선택하세요.');
+          return;
+        }
+
+        const form = new FormData();
+        form.append('file', file);
+
+        resultEl.textContent = '분석 중...';
+
+        try {
+          const res = await fetch('/api/vision', {
+            method: 'POST',
+            body: form
+          });
+
+          if (!res.ok) {
+            const errText = await res.text();
+            resultEl.textContent = '서버 오류: ' + errText;
+            return;
+          }
+          const data = await res.json();
+          resultEl.textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          resultEl.textContent = '요청 실패: ' + e.message;
+        }
+      });
+    </script>
+
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
