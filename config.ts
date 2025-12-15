@@ -9,19 +9,19 @@ export const CONFIG = {
   // Firebase Configuration
   // Replace these values with your Firebase Project Settings
   FIREBASE: {
-    apiKey: "AIzaSyD_pvRcJqKJDZORVZXZxGMeUh5nm9WsGqg",
-    authDomain: "condot-54aa7.firebaseapp.com",
-    projectId: "condot-54aa7",
-    storageBucket: "condot-54aa7.firebasestorage.app",
-    messagingSenderId: "676984883944",
-    appId: "1:676984883944:web:2daa45a76f827c129a575d",
-    measurementId: "G-KLEE3RTDSX"
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
   },
 
   // Firestore Paths
   FIRESTORE: {
-    ROOT_COLLECTION: "artifacts",
-    APP_ID: "condot-web"
+    ROOT_COLLECTION: "",
+    APP_ID: ""
   },
 
   // Feature Flags
@@ -30,4 +30,5 @@ export const CONFIG = {
     ENABLE_RAG: true,
     ENABLE_TIMELINE_V2: true
   }
+
 };
